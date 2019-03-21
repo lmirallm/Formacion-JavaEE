@@ -19,24 +19,24 @@ import javax.validation.constraints.PastOrPresent;
 @Table(name="car")
 public class Car {
 	@Id
-	@NotNull
+	@NotNull(message="The ID is null")
 	private UUID id;
 	@NotBlank(message="Do not leave the brand empty")
 	private String brand;
 	@Temporal(TemporalType.TIMESTAMP)
 	@PastOrPresent(message="Use a correct date")
-	@NotNull
+	@NotNull(message="The registration date is null")
 	private Date registration;
 	@Min(3)
-	@NotBlank
+	@NotBlank(message="The country is empty")
 	private String country;
 	@Temporal(TemporalType.TIMESTAMP)
 	@PastOrPresent(message="Date is incorrect, use a correct one")
-	@NotNull
+	@NotNull(message="The creation date is null")
 	private Date created_at;
 	@Temporal(TemporalType.TIMESTAMP)
 	@PastOrPresent(message="Date is incorrect, use the actual one")
-	@NotNull
+	@NotNull(message="The last update date is null")
 	private Date last_updated;
 	
 
