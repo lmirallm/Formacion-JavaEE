@@ -1,6 +1,5 @@
 package cars.entity;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -70,7 +69,7 @@ public class Car {
 	public Date getRegistration() {
 		return registration;
 	}
-	public void setRegistration(Timestamp registration) {
+	public void setRegistration(Date registration) {
 		this.registration = registration;
 	}
 	public String getCountry() {
@@ -82,13 +81,13 @@ public class Car {
 	public Date getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(Timestamp created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 	public Date getLast_updated() {
 		return last_updated;
 	}
-	public void setLast_updated(Timestamp last_updated) {
+	public void setLast_updated(Date last_updated) {
 		this.last_updated = last_updated;
 	}
 	
