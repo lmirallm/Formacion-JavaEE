@@ -1,6 +1,8 @@
 package cars.resource;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -23,28 +25,44 @@ import cars.entity.Car;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CarResource {
-
+	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
 	@EJB
 	private CarService carService;
 	private Car exampleCar;
 
+	/**
+	 * 
+	 * @return When the request its done , the method call to {@link cars.service.CarService#getCars()}, it returns all the cars in the database. The method returns a response with all the cars in a JSON. 
+	 */
 	@GET
 	public Response getAllCars() {
 		return Response.status(Status.OK).entity(carService.getCars()).build();
 	}
 
+	/**
+	 * 
+	 * @param id must be included in the request with a UUID format string.
+	 * @return if a car with that id exists, the method {@link cars.service.CarService#getCar(String)}  returns that object from the database. Then a response is sent with the information in a JSON if all went right, if not a BAD REQUEST response is sent.
+	 */
 	@GET
 	@Path("{id}")
 	public Response getCarById(@PathParam("id") final String id) {
 		exampleCar = carService.getCar(id);
 		if (exampleCar == null) {
+			LOGGER.setLevel(Level.SEVERE);
+			LOGGER.severe("Car could not be gotten with the ID "+id);
 			return Response.status(Status.BAD_REQUEST).entity("Could not get car").build();
 		} else {
 			return Response.status(Status.OK).entity(exampleCar).build();
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param car a JSON with all the information referred in {@link cars.entity} must be sent.
+	 * @return if the car has been created, the response returned is a 200 with the information of the car in a JSON, but if it has not been possible to create, the response is a 400 BAD REQUEST and a message that the car could not be created. 
+	 */
 	@POST
 	public Response createCar(Car car) {
 
@@ -52,17 +70,27 @@ public class CarResource {
 		if (validationErrors.isEmpty()) {
 			return Response.status(Status.OK).entity(carService.createCar(car)).build();
 		} else {
+			LOGGER.setLevel(Level.SEVERE);
+			LOGGER.severe("Car could not be created");
 			return Response.status(Status.BAD_REQUEST).entity("Could not create car").build();
 		}
 	}
 
+	/**
+	 * 
+	 * @param id must be included in the request with a UUID format string in order to find the car to update.
+	 * @param car a JSON with the 
+	 * @return
+	 */
 	@PUT
 	@Path("{id}")
 	public Response updateCarById(@PathParam("id") String id, Car car) {
-		if(carService.updateCar(id, car))
-		return Response.status(Status.OK).entity(car).build();
+		if (carService.updateCar(id, car))
+			return Response.status(Status.OK).entity(car).build();
 		else
-		return Response.status(Status.BAD_REQUEST).entity("Could not update car").build();	
+			LOGGER.setLevel(Level.SEVERE);
+			LOGGER.severe("Car could not be updated ");
+		return Response.status(Status.BAD_REQUEST).entity("Could not update car").build();
 	}
 
 	@DELETE
@@ -71,6 +99,8 @@ public class CarResource {
 		if (carService.deleteCar(id))
 			return Response.status(Status.OK).entity("Deleted").build();
 		else
-			return Response.status(Status.BAD_REQUEST).entity("Could not be deleted").build();
+			LOGGER.setLevel(Level.SEVERE);
+			LOGGER.severe("Car could not be deleted");
+		return Response.status(Status.BAD_REQUEST).entity("Could not be deleted").build();
 	}
 }
