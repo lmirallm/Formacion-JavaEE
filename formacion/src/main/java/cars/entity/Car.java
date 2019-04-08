@@ -29,13 +29,13 @@ public class Car {
 	@NotNull(message = "Do not leave the brand empty")
 	@Size(min = 3, max = 50, message = "The size must be between 3 and 50 characters")
 	private String brand;
-	@Column(name = "registration")//, nullable = false)
+	@Column(name = "registration", nullable = false)
 	private Date registration;
 	@Column(name = "country", nullable = false, length = 50)
 	@Size(min = 3, max = 30, message = "The size must be between 3 and 50 characters")
 	@NotNull(message = "The country is empty")
 	private String country;
-	@Column(name = "created_at", updatable = false)
+	@Column(name = "createdAt", updatable=false, nullable = false)
 	private Date created_at;
 	@Column(name = "last_updated")
 	private Date last_updated;
