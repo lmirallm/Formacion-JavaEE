@@ -1,6 +1,15 @@
 package cars.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -39,17 +48,18 @@ public class CarService {
 		this.em.refresh(car);
 		return car;
 	}
+	
 
 	public boolean updateCar(String id, Car car) {
 		Car dbCar=getCar(id);
 		if(dbCar !=null) {
-		car.setId(id);
-		car.setCreated_at(dbCar.getCreated_at());
-		car.setRegistration(dbCar.getRegistration());
-		this.em.merge(car);
-		return true;
+			car.setId(id);
+			car.setCreated_at(dbCar.getCreated_at());
+			car.setRegistration(dbCar.getRegistration());
+			this.em.merge(car);
+			return true;
 		}else{
-		return false;
+			return false;
 		}
 		
 	}
