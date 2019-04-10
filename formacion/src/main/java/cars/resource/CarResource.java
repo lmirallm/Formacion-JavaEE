@@ -1,6 +1,7 @@
 package cars.resource;
 
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,13 +21,17 @@ import javax.ws.rs.core.Response.Status;
 import car.util.ValidatorUtil;
 import cars.service.CarService;
 import cars.entity.Car;
-
+import logger.MyLogger;
 @Path("cars")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CarResource {
-	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger LOGGER = Logger.getLogger(CarResource.class.getName());
 	
+    CarResource tester = new CarResource();
+       
+    
+   
 	@EJB
 	private CarService carService;
 	private Car exampleCar;
@@ -54,6 +59,8 @@ public class CarResource {
 			LOGGER.severe("Car could not be gotten with the ID "+id);
 			return Response.status(Status.BAD_REQUEST).entity("Could not get car").build();
 		} else {
+			LOGGER.setLevel(Level.SEVERE);
+			LOGGER.severe("Car with the ID "+id+" gotten");
 			return Response.status(Status.OK).entity(exampleCar).build();
 		}
 
@@ -71,7 +78,7 @@ public class CarResource {
 			return Response.status(Status.OK).entity(carService.createCar(car)).build();
 		} else {
 			LOGGER.setLevel(Level.SEVERE);
-			LOGGER.severe("Car could not be created");
+			LOGGER.severe("Car could not be persisted");
 			return Response.status(Status.BAD_REQUEST).entity("Could not create car").build();
 		}
 	}
@@ -90,6 +97,7 @@ public class CarResource {
 		else
 			LOGGER.setLevel(Level.SEVERE);
 			LOGGER.severe("Car could not be updated ");
+		
 		return Response.status(Status.BAD_REQUEST).entity("Could not update car").build();
 	}
 

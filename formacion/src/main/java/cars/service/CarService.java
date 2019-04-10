@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import cars.entity.Car;
 
 @Stateless
 public class CarService {
+	private final static Logger LOGGER = Logger.getLogger(CarService.class.getName());
 	@PersistenceContext(unitName = "em_pu")
 	private EntityManager em;
 
