@@ -20,9 +20,14 @@ import javax.ws.rs.core.Response.Status;
 
 import car.util.ValidatorUtil;
 import cars.service.CarService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponses;
 import cars.entity.Car;
 import logger.MyLogger;
 @Path("cars")
+@Api(value="car")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CarResource {
@@ -41,6 +46,9 @@ public class CarResource {
 	 * @return When the request its done , the method call to {@link cars.service.CarService#getCars()}, it returns all the cars in the database. The method returns a response with all the cars in a JSON. 
 	 */
 	@GET
+	 @ApiOperation(value = "Return all cars",
+	    response = Car.class,
+	    responseContainer = "List")
 	public Response getAllCars() {
 		return Response.status(Status.OK).entity(carService.getCars()).build();
 	}
@@ -52,7 +60,12 @@ public class CarResource {
 	 */
 	@GET
 	@Path("{id}")
-	public Response getCarById(@PathParam("id") final String id) {
+	 @ApiOperation(value = "Return car by its ID",
+	    response = Car.class,
+	    responseContainer = "JSON")
+	
+	public Response getCarById(@ApiParam(value = "id of the car that need to be returned", required = true) @PathParam("id") final String id) {
+		
 		exampleCar = carService.getCar(id);
 		if (exampleCar == null) {
 			LOGGER.setLevel(Level.SEVERE);
@@ -71,8 +84,11 @@ public class CarResource {
 	 * @return if the car has been created, the response returned is a 200 with the information of the car in a JSON, but if it has not been possible to create, the response is a 400 BAD REQUEST and a message that the car could not be created. 
 	 */
 	@POST
-	public Response createCar(Car car) {
-
+	 @ApiOperation(value = "Persiste a car",
+	    response = Car.class,
+	    responseContainer = "JSON")
+	public Response createCar(@ApiParam(value = "Car that need to be created", required = true)  Car car) {
+		
 		List<String> validationErrors = ValidatorUtil.validate(car);
 		if (validationErrors.isEmpty()) {
 			return Response.status(Status.OK).entity(carService.createCar(car)).build();
@@ -91,7 +107,10 @@ public class CarResource {
 	 */
 	@PUT
 	@Path("{id}")
-	public Response updateCarById(@PathParam("id") String id, Car car) {
+	 @ApiOperation(value = "Update a car by its ID",
+	    response = Car.class,
+	    responseContainer = "JSON")
+	public Response updateCarById(@ApiParam(value = "id of the car that need to be updated", required = true) @PathParam("id") String id, Car car) {
 		if (carService.updateCar(id, car))
 			return Response.status(Status.OK).entity(car).build();
 		else
@@ -103,7 +122,11 @@ public class CarResource {
 
 	@DELETE
 	@Path("{id}")
-	public Response removeCarById(@PathParam("id") String id) {
+	
+	 @ApiOperation(value = "Remove a car by its ID",
+	    response = Car.class,
+	    responseContainer = "JSON")
+	public Response removeCarById(@ApiParam(value = "id of the car that need to be deleted", required = true) @PathParam("id") String id) {
 		if (carService.deleteCar(id))
 			return Response.status(Status.OK).entity("Deleted").build();
 		else
