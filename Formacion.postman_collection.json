@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "f7190574-5835-4fe6-b6f2-2f7923e6ae15",
+		"name": "Formacion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a car successfully",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "467fe407-9f09-4a4d-816c-4b10f8617333",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Car persisted successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.brand).to.eql(\"BMW\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"brand\": \"BMW\",\n    \"country\": \"Spain\",\n    \"registration\": \"2019-02-09T12:38:05+00:00\"\n}"
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						""
+					]
+				},
+				"description": "Create a JSON with the fields brand,company and registration needed to create the entity Car"
+			},
+			"response": []
+		},
+		{
+			"name": "Wrong create car ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"country\": \"Japan\",\n    \"registration\": \"2011-12-21T11:33:00\"\n}"
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/?",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						""
+					],
+					"query": [
+						{
+							"key": "brand",
+							"value": "BM",
+							"disabled": true
+						},
+						{
+							"key": "registration",
+							"value": "22/03/2019",
+							"disabled": true
+						},
+						{
+							"key": "country",
+							"value": "Spain",
+							"disabled": true
+						},
+						{
+							"key": "created_at",
+							"value": "22/03/2019",
+							"disabled": true
+						},
+						{
+							"key": "last_updated",
+							"value": "22/03/2019",
+							"disabled": true
+						}
+					]
+				},
+				"description": "The field brand is missing and the api return a 400 error"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/formacion/api/v1/cars/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						""
+					]
+				},
+				"description": "Show all the cars stored in the db"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single car {id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/formacion/api/v1/cars/b60256b4-733b-4eee-a1fc-89a89b1188fb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						"b60256b4-733b-4eee-a1fc-89a89b1188fb"
+					]
+				},
+				"description": "Provide the id in the url and it returns a JSON with the car info"
+			},
+			"response": []
+		},
+		{
+			"name": "Wrong Get single car{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a car{id}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \t\"id\" : \"efefefsfesfes\",\n        \"brand\": \"Fiat\"\n    }"
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/b60256b4-733b-4eee-a1fc-89a89b1188fb",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						"b60256b4-733b-4eee-a1fc-89a89b1188fb"
+					]
+				},
+				"description": "Provide the id of the car to update and the fields brand and country that you want to change"
+			},
+			"response": []
+		},
+		{
+			"name": "Wrong update Car",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \t\"id\" : \"efefefsfesfes\",\n        \"brand\": \"Fiat\"\n    }"
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/b60256b4-733b-4eee-a1fc-89a89b1188fb",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						"b60256b4-733b-4eee-a1fc-89a89b1188fb"
+					]
+				},
+				"description": "Field country is missing and it gives a 500 error"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car {id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/b60256b4-733b-4eee-a1fc-89a89b1188fb",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						"b60256b4-733b-4eee-a1fc-89a89b1188fb"
+					]
+				},
+				"description": "Provdie the id of the car you want to delete from the db"
+			},
+			"response": []
+		},
+		{
+			"name": "Wrong delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://mur-jq5k9v2:8080/formacion/api/v1/cars/",
+					"protocol": "http",
+					"host": [
+						"mur-jq5k9v2"
+					],
+					"port": "8080",
+					"path": [
+						"formacion",
+						"api",
+						"v1",
+						"cars",
+						""
+					]
+				},
+				"description": "Missing id in the URL so it gives a 405 error"
+			},
+			"response": []
+		}
+	]
+}

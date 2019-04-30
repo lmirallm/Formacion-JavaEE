@@ -39,13 +39,17 @@ public class Car {
 	private Date created_at;
 	@Column(name = "last_updated")
 	private Date last_updated;
-
+	@Column(name="checked")
+	private Boolean checked;
+	
+	
 	@PrePersist
 	protected void onCreate() {
 		Date now = getISO8601Date();
 		created_at = now;
 		last_updated = now;
 		id = UUID.randomUUID().toString();
+		checked=false;
 	}
 
 	@PreUpdate
@@ -74,6 +78,14 @@ public class Car {
 		this.country = country;
 		this.created_at = created_at;
 		this.last_updated = last_updated;
+	}
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
 	}
 
 	public String getId() {
