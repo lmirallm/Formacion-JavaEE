@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
@@ -20,6 +22,16 @@ import cars.entity.Car;
 
 @Stateless
 public class CarService {
+	Timer timer = new Timer();
+	
+	TimerTask tarea = new TimerTask() {
+
+		@Override
+		public void run() {
+			
+		}	
+	};
+
 	private final static Logger LOGGER = Logger.getLogger(CarService.class.getName());
 	@PersistenceContext(unitName = "em_pu")
 	private EntityManager em;
