@@ -71,13 +71,14 @@ public class Car {
 
 	}
 
-	public Car(String id, String brand, Timestamp registration, String country, Date created_at, Date last_updated) {
+	public Car(String id, String brand, Timestamp registration, String country, Date created_at, Date last_updated,Boolean checked) {
 		this.id = id;
 		this.brand = brand;
 		this.registration = registration;
 		this.country = country;
 		this.created_at = created_at;
 		this.last_updated = last_updated;
+		this.checked=checked;
 	}
 
 	public Boolean getChecked() {
