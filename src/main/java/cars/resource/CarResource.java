@@ -78,7 +78,7 @@ public class CarResource {
 
 	/**
 	 * 
-	 * @param car a JSON with all the information referred in {@link cars.entity}
+	 * @param car a JSON with all the information referred in {@link cars.Country}
 	 *            must be sent.
 	 * @return if the car has been created, the response returned is a 200 with the
 	 *         information of the car in a JSON, but if it has not been possible to
