@@ -11,12 +11,17 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import brand.entity.Brand;
 
 @Entity
 @Table(name = "car")
@@ -25,10 +30,11 @@ public class Car {
 	@Id
 	@Column(name = "id")
 	private String id;
-	@Column(name = "brand", nullable = false, length = 50)
 	@NotNull(message = "Do not leave the brand empty")
 	@Size(min = 3, max = 50, message = "The size must be between 3 and 50 characters")
-	private String brand;
+	 @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="brand_id")
+	private Brand brand;
 	@Column(name = "registration", nullable = false)
 	private Date registration;
 	@Column(name = "country", nullable = false, length = 50)
@@ -71,7 +77,7 @@ public class Car {
 
 	}
 
-	public Car(String id, String brand, Timestamp registration, String country, Date created_at, Date last_updated,Boolean checked) {
+	public Car(String id, Brand brand, Timestamp registration, String country, Date created_at, Date last_updated,Boolean checked) {
 		this.id = id;
 		this.brand = brand;
 		this.registration = registration;
@@ -97,11 +103,11 @@ public class Car {
 		this.id = id;
 	}
 
-	public String getBrand() {
+	public Brand getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
