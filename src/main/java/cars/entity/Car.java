@@ -30,8 +30,6 @@ public class Car {
 	@Id
 	@Column(name = "id")
 	private String id;
-	@NotNull(message = "Do not leave the brand empty")
-	@Size(min = 3, max = 50, message = "The size must be between 3 and 50 characters")
 	 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="brand_id")
 	private Brand brand;
