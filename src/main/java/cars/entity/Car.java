@@ -30,8 +30,8 @@ public class Car {
 	@Id
 	@Column(name = "id")
 	private String id;
-	 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="brand_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
 	@Column(name = "registration", nullable = false)
 	private Date registration;
@@ -39,21 +39,20 @@ public class Car {
 	@Size(min = 3, max = 30, message = "The size must be between 3 and 50 characters")
 	@NotNull(message = "The country is empty")
 	private String country;
-	@Column(name = "createdAt", updatable=false, nullable = false)
+	@Column(name = "createdAt", updatable = false, nullable = false)
 	private Date created_at;
 	@Column(name = "last_updated")
 	private Date last_updated;
-	@Column(name="checked")
+	@Column(name = "checked")
 	private Boolean checked;
-	
-	
+
 	@PrePersist
 	protected void onCreate() {
 		Date now = getISO8601Date();
 		created_at = now;
 		last_updated = now;
 		id = UUID.randomUUID().toString();
-		checked=false;
+		checked = false;
 	}
 
 	@PreUpdate
@@ -75,14 +74,15 @@ public class Car {
 
 	}
 
-	public Car(String id, Brand brand, Timestamp registration, String country, Date created_at, Date last_updated,Boolean checked) {
+	public Car(String id, Brand brand, Timestamp registration, String country, Date created_at, Date last_updated,
+			Boolean checked) {
 		this.id = id;
 		this.brand = brand;
 		this.registration = registration;
 		this.country = country;
 		this.created_at = created_at;
 		this.last_updated = last_updated;
-		this.checked=checked;
+		this.checked = checked;
 	}
 
 	public Boolean getChecked() {
